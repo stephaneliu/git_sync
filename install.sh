@@ -24,6 +24,8 @@ echo "Enter locations for git projects to track - comma & space delim > \c"
 read projects
 for i in $(echo $projects | tr ",\ " "\n")
 do
+  echo ""
+  echo "########################"
   echo '  echo "Updating '"$i"'"' >> $script_file
   echo "  cd $i" >> $script_file
   echo "  git status" >> $script_file
