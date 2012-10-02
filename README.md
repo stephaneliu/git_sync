@@ -1,6 +1,6 @@
 # Git Sync
 
-Bash script to keep git projects up to date. I write notes in vi using [Easy Notes] [easy_notes]I use this mainly to keep my notes synchronized across multiple computers. 
+Bash script to keep git projects up to date. I write notes in vi using [Easy Notes] [easy_notes]. This script was created mainly to keep my notes synchronized across multiple computers. 
 
 # Installation Instructions
 
