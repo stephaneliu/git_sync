@@ -13,7 +13,7 @@ fi
 
 echo "" >> ./update_git_project.sh
 echo 'function _update_shared_git_projects() { ' >> $script_file
-echo '  LAST_EPOCH=$(_current_epoch) >'" ${location}/.git-projects-update" >> $script_file
+echo '  echo "LAST_EPOCH=$(_current_epoch)" >' "${location}/.git-projects-update" >> $script_file
 echo '}' >> $script_file
 
 echo "" >> ./update_git_project.sh
@@ -34,23 +34,28 @@ echo '}' >> $script_file
 
 echo 'if [ -f '"${location}"'/.git-projects-update ];then' >> $script_file
 echo '  # Last update exists, load last epoch' >> $script_file
-echo '  . ~/'"${location}"'/.git-projects-update' >> $script_file
+echo '  . '"${location}"'/.git-projects-update' >> $script_file
+
 cat ./lib/funct_main >> $script_file
 
-script_file_with_location=eval $location/$script_file 2>/dev/null
 overwrite=Y
-if [ -e $script_file_with_location ]; then
+
+cd $location
+if [ -e  "$script_file" ]; then
   echo "${location}/${script_file} already exists. Overwrite? (y/n) > \c"
   read overwrite
 fi
+cd -
 
 if [ "$overwrite" = Y ] || [ "$overwrite" = y ]; then
   echo ""
   echo "Copying bash script to final destination"
   eval "cp $script_file $location"
   eval "chmod +x $location/$script_file"
+  echo ""
+  echo "Done! Add the following line to your .bashrc, .zshrc or equivalent:"
+  echo '[[ -s "'"$location/$script_file"'" ]] && source '"$location/$script_file"
+else
+  echo "Script file created but not installed to $location"
 fi
 
-echo ""
-echo "Done! Add the following line to your .bashrc, .zshrc or equivalent:"
-echo '[[ -s "'"$location/$script_file"'" ]] && source '"$location/$script_file"

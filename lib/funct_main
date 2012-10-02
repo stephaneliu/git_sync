@@ -21,4 +21,5 @@
 else
   # Last epoch file doesn't exist - update 
   _update_shared_git_projects
+  _upgrade_shared_git_projects
 fi

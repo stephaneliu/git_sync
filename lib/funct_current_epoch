@@ -1,7 +1,5 @@
+#!/bin/bash
+
 function _current_epoch() {
   echo $(($(date +%s) / 60 / 60 / 24))
-}
-
-function _update_shared_git_projects() {
-  echo "LAST_EPOCH=$(_current_epoch)" > ~/$location/.git-projects-update
 }
