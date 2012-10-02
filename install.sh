@@ -38,24 +38,14 @@ echo '  . '"${location}"'/.git-projects-update' >> $script_file
 
 cat ./lib/funct_main >> $script_file
 
-overwrite=Y
-
-cd $location
-if [ -e  "$script_file" ]; then
-  echo "${location}/${script_file} already exists. Overwrite? (y/n) > \c"
-  read overwrite
-fi
-cd -
-
-if [ "$overwrite" = Y ] || [ "$overwrite" = y ]; then
-  echo ""
-  echo "Copying bash script to final destination"
-  eval "cp $script_file $location"
-  eval "chmod +x $location/$script_file"
-  echo ""
-  echo "Done! Add the following line to your .bashrc, .zshrc or equivalent:"
-  echo '[[ -s "'"$location/$script_file"'" ]] && source '"$location/$script_file"
-else
-  echo "Script file created but not installed to $location"
-fi
-
+echo ""
+echo "Backing up $location/$script_file to $location/${script_file}.bak"
+eval "touch $location/$script_file"
+eval "mv $location/$script_file $location/${script_file}_bak"
+echo ""
+echo "Copying bash script to final destination"
+eval "cp $script_file $location"
+eval "chmod +x $location/$script_file"
+echo ""
+echo "Done! Add the following line to your .bashrc, .zshrc or equivalent:"
+echo '[[ -s "'"$location/$script_file"'" ]] && source '"$location/$script_file"
