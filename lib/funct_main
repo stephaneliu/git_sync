@@ -1,0 +1,24 @@
+
+  # Epoch doesn't exist
+  if [[ -z "$LAST_EPOCH" ]]; then
+    _update_shared_git_projects && return 0;
+  fi
+
+  epoch_diff=$(($(_current_epoch) - $LAST_EPOCH))
+
+  echo "$epoch_diff days since last time shared git projects pulled"
+  
+  # More than 23 hours since last update
+  if [ $epoch_diff -gt 0 ]; then
+    echo "Update shared git projects and get status? (Y/N): \c"
+    read line
+    if [ "$line" = Y ] || [ "$line" = y ]; then
+      _upgrade_shared_git_projects
+    else
+      _update_shared_git_projects
+    fi
+  fi
+else
+  # Last epoch file doesn't exist - update 
+  _update_shared_git_projects
+fi
